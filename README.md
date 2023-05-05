@@ -1,13 +1,9 @@
-# Coding-Temple-Wk08D1-ReactHW1
+Coding-Temple-Wk08D3-ReactPortion
 
 ## The assignment
-Build out a To-Do app using one of your pages from yesterday's homework.
-Goals of the assignment:
--Adding items
--Displaying items
--Styling
--Removing items
--Once you have completed the first part of the homework, be sure to send the project to github and submit the github link to the assignment.
+Using what we learned today in class, add a Sign Up / Login page to your application with completed Basic/Token Authentication
+
+This is the react portion of the app
 
 # Boiler Plate Read Me
 
