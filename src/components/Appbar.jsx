@@ -15,16 +15,22 @@ import TagFacesIcon from '@mui/icons-material/TagFaces';
 import { Link } from 'react-router-dom';
 
 const pages = [
-    {pageName:'Todo',pageLink:'/todo'}, 
-    {pageName:'Page2',pageLink:'/'},
-    {pageName:'Page2',pageLink:'/'},
+    { pageName: 'Todo', pageLink: '/todo', hideWhenLoggedIn:false},
+    { pageName: 'Sign Up', pageLink: '/signup', hideWhenLoggedIn: true },
+    { pageName: 'Sign In', pageLink: '/signin', hideWhenLoggedIn: true },
 ];
+
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function ResponsiveAppBar(props) {
+function ResponsiveAppBar({user}) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+    
+
+    const XOR = (a,b) => {
+        return (a ? 1 : 0) ^ (b ? 1 : 0);
+    }
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -94,7 +100,7 @@ function ResponsiveAppBar(props) {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
+                            {pages.filter((page) => (!((user.username)&&(page.hideWhenLoggedIn)))).map((page) => (
                                 <Link key={page.pageName} to={page.pageLink} style={{ textDecoration: 'none' }}>
                                 <MenuItem onClick={handleCloseNavMenu} >
                                     <Typography textAlign="center">{page.pageName}</Typography>
@@ -126,7 +132,7 @@ function ResponsiveAppBar(props) {
                     </Link>
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {pages.filter((page) => (!((user.username) && (page.hideWhenLoggedIn)))).map((page) => (
                             <Link key={page.pageName} to={page.pageLink} style={{textDecoration:'none'}}>
                             <Button
                                 
@@ -153,11 +159,12 @@ function ResponsiveAppBar(props) {
                                 textDecoration: 'none',
                             }}
                         >
-                            Hi {props.user.username}
+                            {user.apitoken?"Hi "+user.username:""}
                         </Typography>
                     </Box>
+                    {user.username?
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ flexGrow: 0,hidden:user.username?false:true}}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
@@ -187,6 +194,7 @@ function ResponsiveAppBar(props) {
                             ))}
                         </Menu>
                     </Box>
+                     :""}
                 </Toolbar>
             </Container>
         </AppBar>
